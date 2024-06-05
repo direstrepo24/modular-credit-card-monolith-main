@@ -1,0 +1,57 @@
+@startuml
+package "Bootstrapper" {
+    [CrediCardApp]
+    [CrediCard.Api]
+    [CrediCardDetail] #Aqua
+}
+
+package "Common" {
+    [Common Library]
+    [MediatR]
+}
+
+package "Modules" {
+    package "Cards Module" {
+        [Card Management]
+        [Credit Card Creation]
+        [Credit Card Updating]
+        [Credit Card List]
+        [Credit Card Delete]
+    }
+    package "Payments Module" {
+        [Payment Management]
+        [Records Payment]
+        [Payment Event Dispatch]
+    }
+    package "Transactions Module" {
+        [Transaction History]
+        [Transaction List by Card]
+        [Transaction List by User]
+    }
+}
+
+[CrediCardApp] --> [CrediCardDetail]
+[CrediCardDetail] --> [Card Management]
+[CrediCardDetail] --> [Payment Management]
+[CrediCardDetail] --> [Transaction History]
+
+[Card Management] --> [Credit Card Creation]
+[Card Management] --> [Credit Card Updating]
+[Card Management] --> [Credit Card List]
+[Card Management] --> [Credit Card Delete]
+
+[Payment Management] --> [Records Payment]
+[Payment Management] --> [Payment Event Dispatch]
+
+[Transaction History] --> [Transaction List by Card]
+[Transaction History] --> [Transaction List by User]
+
+[CrediCard.Api] --> [Common Library]
+[CrediCardApp] --> [Common Native Library]
+
+' MediatR Integration
+[MediatR] ..> [Payment Event Dispatch] : <<mediates>>
+[Payment Event Dispatch] ..> [Transaction List by Card] : <<notify>>
+[Payment Event.Fetch Dispatch] ..> [Transaction List by User] : <<notify>>
+
+@enduml

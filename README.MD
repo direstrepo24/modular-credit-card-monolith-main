@@ -3,14 +3,15 @@
 - run **_npm install_**
 - run **_npm run dev_**
 
-![App Application](/design.png)
+
 
 **3. Run Backend**  
 - cd **_Boostrapper/CrediCard.Api_**
 - run **_dotnet restore_**
 - run **_dotnet run_**
 
-
+# Arquitecture
+![alt text](image.png)
 ## Modules
 
 ### Cards Module
@@ -32,5 +33,9 @@ Responsible for Payment Management
 ### Transactions Module
 
 Responsible for transaction history
+
+## Clean arquitecture every module
+
+![App Application](/design.png)
 
 - List of transactions by card and user
