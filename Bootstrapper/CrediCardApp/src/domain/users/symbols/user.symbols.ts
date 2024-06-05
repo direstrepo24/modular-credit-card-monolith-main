@@ -1,0 +1,3 @@
+export const USER_SYMBOLS = {
+    USER_REPOSITORY: Symbol('USER_REPOSITORY'),
+}

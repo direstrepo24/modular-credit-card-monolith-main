@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Transaction.Domain\Transaction.Domain.csproj" />
+    <ProjectReference Include="..\..\..\Common\Common.SharedKernel.Application\Common.SharedKernel.Application.csproj" />
+    <ProjectReference Include="..\..\Payments\Payment.Integration.Events\Payment.Integration.Events.csproj" />
+  </ItemGroup>
+</Project>

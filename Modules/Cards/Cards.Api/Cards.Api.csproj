@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+  
+  <!-- Swagger -->
+  <PropertyGroup>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<NoWarn>$(NoWarn);1591</NoWarn>
+	</PropertyGroup>
+  <!-- Swagger /-->
+
+  <ItemGroup>
+    <PackageReference Include="Asp.Versioning.Mvc" Version="8.1.0" />
+    <PackageReference Include="Asp.Versioning.Mvc.ApiExplorer" Version="8.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="8.0.5" />
+    <!--Necesary for migrations-->
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.5">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Cards.Domain\Cards.Domain.csproj" />
+    <ProjectReference Include="..\Cards.Application\Cards.Application.csproj" />
+    <ProjectReference Include="..\Cards.Infraestructure.Common\Cards.Infraestructure.Common.csproj" />
+    <ProjectReference Include="..\Cards.Infraestructure.Persistence\Cards.Infraestructure.Persistence.csproj" />
+  </ItemGroup>
+
+</Project>
