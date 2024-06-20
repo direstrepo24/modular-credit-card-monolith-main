@@ -1,0 +1,60 @@
+@startuml C4 Components Module (zoom-in)
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+AddComponentTag("payment", $bgColor="#4ce065")
+AddComponentTag("transaction", $bgColor="#e3b868")
+AddComponentTag("cards", $bgColor="#FF69B4")
+AddComponentTag("mediator", $bgColor="#29118a", $fontColor="#ffffff")
+
+System_Boundary(c1, "Modular Credit Card System") {
+    Component(api, "API Host", ".NET Core API")
+    
+    Boundary(paymentModule, "Payment Module") {
+        Component(paymentInfrastructure, "Payment.Infrastructure", ".NET Library", $tags="payment")
+        Component(paymentApplication, "Payment.Application", ".NET Library", $tags="payment")
+        Component(paymentDomain, "Payment.Domain", ".NET Library", $tags="payment")
+        Component(paymentApi, "Payment.Api", ".NET Core API", $tags="payment")
+        ComponentDb(paymentData, "Payment data", "schema", $tags="payment")
+    }
+
+    Boundary(transactionModule, "Transaction Module") {
+        Component(transactionInfrastructure, "Transaction.Infrastructure", ".NET Library", $tags="transaction")
+        Component(transactionApplication, "Transaction.Application", ".NET Library", $tags="transaction")
+        Component(transactionDomain, "Transaction.Domain", ".NET Library", $tags="transaction")
+        Component(transactionApi, "Transaction.Api", ".NET Core API", $tags="transaction")
+        ComponentDb(transactionData, "Transaction data", "schema", $tags="transaction")
+    }
+
+    Boundary(cardsModule, "Cards Module") {
+        Component(cardsInfrastructure, "Cards.Infrastructure", ".NET Library", $tags="cards")
+        Component(cardsApplication, "Cards.Application", ".NET Library", $tags="cards")
+        Component(cardsDomain, "Cards.Domain", ".NET Library", $tags="cards")
+        Component(cardsApi, "Cards.Api", ".NET Core API", $tags="cards")
+        ComponentDb(cardsData, "Cards data", "schema", $tags="cards")
+    }
+
+    Component(mediator, "Mediator (MediatR)", "Handles in-process messages", $tags="mediator")
+}
+
+Rel(api, paymentApi, "Delegates to")
+Rel(api, transactionApi, "Delegates to")
+Rel(api, cardsApi, "Delegates to")
+
+Rel(paymentApi, paymentApplication, "Uses")
+Rel(paymentApplication, paymentInfrastructure, "Uses")
+Rel(paymentInfrastructure, paymentDomain, "Uses")
+Rel(paymentInfrastructure, paymentData, "Uses")
+Rel(paymentApplication, mediator, "Publishes events to")
+
+Rel(transactionApi, transactionApplication, "Uses")
+Rel(transactionApplication, transactionInfrastructure, "Uses")
+Rel(transactionInfrastructure, transactionDomain, "Uses")
+Rel(transactionInfrastructure, transactionData, "Uses")
+Rel(transactionApplication, mediator, "Subscribes to Payment Events")
+
+Rel(cardsApi, cardsApplication, "Uses")
+Rel(cardsApplication, cardsInfrastructure, "Uses")
+Rel(cardsInfrastructure, cardsDomain, "Uses")
+Rel(cardsInfrastructure, cardsData, "Uses")
+
+@enduml
