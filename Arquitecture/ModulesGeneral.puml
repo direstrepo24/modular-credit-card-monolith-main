@@ -1,0 +1,32 @@
+@startuml C4 Simplified Components Module with External Database Schemas
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+System_Boundary(c1, "Modular Credit Card System") {
+    Component(apiHost, "API Host", "API Gateway - .NET Core API")
+
+    Boundary(paymentModule, "Payment Module") {
+        Component(paymentApi, "Payment.Api", "API Endpoint - .NET Core API")
+    }
+
+    Boundary(transactionModule, "Transaction Module") {
+        Component(transactionApi, "Transaction.Api", "API Endpoint - .NET Core API")
+    }
+
+    Boundary(cardsModule, "Cards Module") {
+        Component(cardsApi, "Cards.Api", "API Endpoint - .NET Core API")
+    }
+
+    ComponentDb(paymentData, "Payment Database", "External SQL Database Schema")
+    ComponentDb(transactionData, "Transaction Database", "External SQL Database Schema")
+    ComponentDb(cardsData, "Cards Database", "External SQL Database Schema")
+}
+
+Rel(apiHost, paymentApi, "Delegates to")
+Rel(apiHost, transactionApi, "Delegates to")
+Rel(apiHost, cardsApi, "Delegates to")
+
+Rel(paymentApi, paymentData, "Connects to")
+Rel(transactionApi, transactionData, "Connects to")
+Rel(cardsApi, cardsData, "Connects to")
+
+@enduml
