@@ -6,5 +6,6 @@ public static class ConfigureServicesExtension
     {
         // Setup Layers
         services.SeptupLayer(configuration);
+        services.SeptupIntegrationsApi();
     }
 }

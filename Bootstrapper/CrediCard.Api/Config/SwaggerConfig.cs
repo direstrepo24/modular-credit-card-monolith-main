@@ -65,7 +65,7 @@ internal class SwaggerOptions : IConfigureNamedOptions<SwaggerGenOptions>
     {
         var info = new OpenApiInfo()
         {
-            Title = "Test API Tasks " + description.GroupName,
+            Title = "Test API CrediCards " + description.GroupName,
             Version = description.ApiVersion.ToString(),
         };
         if (description.IsDeprecated)

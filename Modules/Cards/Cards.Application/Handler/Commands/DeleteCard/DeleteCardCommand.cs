@@ -3,4 +3,4 @@ using Common.SharedKernel.Domain;
 
 namespace Cards.Application;
 
-public sealed record DeleteCardCommand(int id): ICommand<NoResult> { }
+internal sealed record DeleteCardCommand(int id): ICommand<NoResult> { }

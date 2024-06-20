@@ -3,7 +3,7 @@ using Common.SharedKernel.Application;
 using MediatR;
 
 namespace Cards.Application;
-public class CreateCardCommandHandler(ICardService _cardService, IMediator _mediator) : ICommandHandler<CreateCardCommand, CardResponseDTO>
+internal class CreateCardCommandHandler(ICardService _cardService, IMediator _mediator) : ICommandHandler<CreateCardCommand, CardResponseDTO>
 {
     public async Task<CardResponseDTO> Handle(CreateCardCommand request, CancellationToken cancel)
     {

@@ -2,7 +2,7 @@
 
 namespace Cards.Application;
 
-public class CreateCardEvent: INotification
+internal class CreateCardEvent: INotification
 {
     public Guid UserId { get; set; }
     public string CardNumber {get; set;}
