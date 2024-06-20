@@ -1,4 +1,4 @@
-@startuml C4 Components Module with Organized Connections
+@startuml C4 Components Module with Simplified Connections
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
 
 AddComponentTag("lightBlue", $bgColor="#ADD8E6")
@@ -30,21 +30,18 @@ System_Boundary(c1, "Modular Credit Card System") {
 
     Component(mediator, "MediatR", "Mediates communication between modules")
     
-   
-}
-
- System_Ext(dbBoundary, "External Database Systems") {
+    System_Ext(dbBoundary, "External Database Systems") {
         ComponentDb(paymentData, "Payment Database", "External SQL Database Schema")
         ComponentDb(transactionData, "Transaction Database", "External SQL Database Schema")
         ComponentDb(cardsData, "Cards Database", "External SQL Database Schema")
     }
+}
 
 Rel(apiHost, paymentApi, "Delegates to")
 Rel(apiHost, transactionApi, "Delegates to")
-Rel(apiHost, cardsApi, "Delegates to")
 Rel(apiHost, bff, "Contains")
 
-Rel(bff, cardsApi::iCardIntegrationApi, "Uses", "Connects to Facade Interface")
+Rel(bff, cardsApi::iCardIntegrationApi, "Interacts via Facade Interface")
 
 Rel(paymentApi, paymentApp, "Uses")
 Rel(transactionApi, transactionApp, "Uses")
