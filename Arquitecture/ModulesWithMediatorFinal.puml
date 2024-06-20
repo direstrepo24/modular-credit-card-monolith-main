@@ -1,0 +1,51 @@
+@startuml C4 Components Module with MediatR Communication
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+System_Boundary(c1, "Modular Credit Card System") {
+    Component(apiHost, "API Host", "API Gateway - .NET Core API")
+
+    Boundary(paymentModule, "Payment Module") {
+        Component(paymentApi, "Payment.Api", "API Endpoint - .NET Core API")
+        Component(paymentApp, "Payment Application", "Handles business logic")
+        Component(paymentInfra, "Payment Infrastructure", "Handles data management and external communication")
+    }
+
+    Boundary(transactionModule, "Transaction Module") {
+        Component(transactionApi, "Transaction.Api", "API Endpoint - .NET Core API")
+        Component(transactionApp, "Transaction Application", "Handles business logic")
+        Component(transactionInfra, "Transaction Infrastructure", "Handles data management and external communication")
+    }
+
+    Boundary(cardsModule, "Cards Module") {
+        Component(cardsApi, "Cards.Api", "API Endpoint - .NET Core API")
+        Component(cardsInfra, "Cards Infrastructure", "Handles data management and external communication")
+    }
+
+    Component(mediator, "MediatR", "Mediates communication between Payment and Transaction Modules")
+    
+    System_Ext(dbBoundary, "External Database Systems") {
+        ComponentDb(paymentData, "Payment Database", "External SQL Database Schema", $tags="payment")
+        ComponentDb(transactionData, "Transaction Database", "External SQL Database Schema", $tags="transaction")
+        ComponentDb(cardsData, "Cards Database", "External SQL Database Schema", $tags="cards")
+    }
+}
+
+Rel(apiHost, paymentApi, "Delegates to")
+Rel(apiHost, transactionApi, "Delegates to")
+Rel(apiHost, cardsApi, "Delegates to")
+
+Rel(paymentApi, paymentApp, "Uses")
+Rel(transactionApi, transactionApp, "Uses")
+Rel(cardsApi, cardsInfra, "Uses")
+
+Rel(paymentApp, paymentInfra, "Interacts with")
+Rel(transactionApp, transactionInfra, "Interacts with")
+Rel(cardsInfra, cardsData, "Connects to")
+
+Rel(paymentInfra, paymentData, "Connects to")
+Rel(transactionInfra, transactionData, "Connects to")
+
+Rel(paymentApp, mediator, "Publishes events to", $tags="mediator")
+Rel(transactionApp, mediator, "Subscribes to events from", $tags="mediator")
+
+@enduml
