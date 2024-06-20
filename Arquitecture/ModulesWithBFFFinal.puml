@@ -1,0 +1,63 @@
+@startuml C4 Components Module with Organized Connections
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+AddComponentTag("lightBlue", $bgColor="#ADD8E6")
+
+System_Boundary(c1, "Modular Credit Card System") {
+    Component(apiHost, "API Host", "API Gateway - .NET Core API") {
+        Component(bff, "BFF (Backend for Frontend)", "Orchestrates front-end specific APIs", $tags="lightBlue")
+    }
+
+    Boundary(paymentModule, "Payment Module") {
+        Component(paymentApi, "Payment.Api", "API Endpoint - .NET Core API")
+        Component(paymentApp, "Payment Application", "Handles business logic")
+        Component(paymentInfra, "Payment Infrastructure", "Handles data management and external communication")
+    }
+
+    Boundary(transactionModule, "Transaction Module") {
+        Component(transactionApi, "Transaction.Api", "API Endpoint - .NET Core API")
+        Component(transactionApp, "Transaction Application", "Handles business logic")
+        Component(transactionInfra, "Transaction Infrastructure", "Handles data management and external communication")
+    }
+
+    Boundary(cardsModule, "Cards Module") {
+        Component(cardsApi, "Cards.Api", "API Endpoint - .NET Core API") {
+            Component(iCardIntegrationApi, "ICardIntegrationApi", "Interface for Facade", $tags="lightBlue")
+            Component(cardIntegrationApi, "CardIntegrationApi", "Implements ICardIntegrationApi", $tags="lightBlue")
+        }
+        Component(cardsInfra, "Cards Infrastructure", "Handles data management and external communication")
+    }
+
+    Component(mediator, "MediatR", "Mediates communication between modules")
+    
+   
+}
+
+ System_Ext(dbBoundary, "External Database Systems") {
+        ComponentDb(paymentData, "Payment Database", "External SQL Database Schema")
+        ComponentDb(transactionData, "Transaction Database", "External SQL Database Schema")
+        ComponentDb(cardsData, "Cards Database", "External SQL Database Schema")
+    }
+
+Rel(apiHost, paymentApi, "Delegates to")
+Rel(apiHost, transactionApi, "Delegates to")
+Rel(apiHost, cardsApi, "Delegates to")
+Rel(apiHost, bff, "Contains")
+
+Rel(bff, cardsApi::iCardIntegrationApi, "Uses", "Connects to Facade Interface")
+
+Rel(paymentApi, paymentApp, "Uses")
+Rel(transactionApi, transactionApp, "Uses")
+Rel(cardsApi, cardsInfra, "Uses")
+
+Rel(paymentApp, paymentInfra, "Interacts with")
+Rel(transactionApp, transactionInfra, "Interacts with")
+
+Rel(paymentInfra, paymentData, "Connects to")
+Rel(transactionInfra, transactionData, "Connects to")
+Rel(cardsInfra, cardsData, "Connects to")
+
+Rel(paymentApp, mediator, "Publishes events to")
+Rel(transactionApp, mediator, "Subscribes to events from")
+
+@enduml
