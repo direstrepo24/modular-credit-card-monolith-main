@@ -24,7 +24,7 @@ System_Boundary(c1, "Modular Credit Card System") {
             Component(cardIntegrationApi, "CardIntegrationApi", "Facade Implementation", $tags="cards")
         }
         Component(cardsData, "Cards data", "Database schema", $tags="cards")
-        Component(cqrsMediator, "CQRS Mediator (MediatR)", "Handles CQRS Commands/Queries", $tags="cqrs")
+        Component(cqrsMediator, "CQRS", "Handles CQRS Commands/Queries", "(MediatR)", $tags="cqrs")
     }
 }
 

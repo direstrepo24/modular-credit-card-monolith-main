@@ -21,14 +21,16 @@ System_Boundary(c1, "Modular Credit Card System") {
         Component(cardsInfra, "Cards Infrastructure", "Handles data management and external communication")
     }
 
-    Component(mediator, "MediatR", "Mediates communication between Payment and Transaction Modules")
+    Component(mediator, "Mediator", "Mediates communication between Payment and Transaction Modules", "MediatR")
     
-    System_Ext(dbBoundary, "External Database Systems") {
+   
+}
+
+ System_Ext(dbBoundary, "External Database Systems") {
         ComponentDb(paymentData, "Payment Database", "External SQL Database Schema", $tags="payment")
         ComponentDb(transactionData, "Transaction Database", "External SQL Database Schema", $tags="transaction")
         ComponentDb(cardsData, "Cards Database", "External SQL Database Schema", $tags="cards")
     }
-}
 
 Rel(apiHost, paymentApi, "Delegates to")
 Rel(apiHost, transactionApi, "Delegates to")
